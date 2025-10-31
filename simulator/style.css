@@ -1,16 +1,26 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
-#fila-container {
+#interacao{
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    background: #f4f4f4;
+}
+
+.fila {
     flex-direction: column;
     display: flex;
-    justify-content: center;
     gap: 30px;
-    margin: 40px auto;
-    transition: all 0.5s ease;
+    width: 100px;     
+    justify-content: start; /* mantém os itens no topo */
+    overflow: hidden;      /* evita espaços “estranhos” ao remover */
+    align-items: center;
 }
 
 .pessoa {
@@ -27,7 +37,43 @@ body {
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-#botaoSai {
+.caixa{
+    width: 70px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(84, 255, 133);
+    color: white;
+    font-weight: bold;
+}
+
+.botao-escolha {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    background: rgb(252, 177, 57);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.fila:hover .botao-escolha{
+    display: flex;
+}
+
+
+#menu {
+    bottom: 0;
+    margin-top: 10px;
+    position: relative;
+}
+
+#botao-proximo {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #4a90e2;
@@ -37,6 +83,6 @@ body {
     cursor: pointer;
 }
 
-#botaoSai:hover {
+#botao-proximo:hover {
     background-color: #357ABD;
 }
