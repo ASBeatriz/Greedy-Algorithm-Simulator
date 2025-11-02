@@ -41,19 +41,19 @@ body {
 }
 
 .pessoa.pouco{
-    background-image: url(img/pouco.png);
+    background-image: url(../img/pouco.png);
 }
 
 .pessoa.medio{
-    background-image: url(img/medio.png);
+    background-image: url(../img/medio.png);
 }
 
 .pessoa.muito{
-    background-image: url(img/muito.png);
+    background-image: url(../img/muito.png);
 }
 
 .pessoa.player{
-    background-image: url(img/player.jpg);
+    background-image: url(../img/player.jpg);
 }
 
 .caixa{
@@ -69,7 +69,7 @@ body {
     background-size: contain;     /* ajusta a imagem para cobrir toda a div */
     background-position: center; /* centraliza */
     background-repeat: no-repeat; /* evita repetição */
-    background-image: url(img/caixa.jpg);
+    background-image: url(../img/caixa.jpg);
 }
 
 .botao-escolha {
