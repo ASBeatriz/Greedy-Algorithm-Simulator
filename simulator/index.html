@@ -3,51 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div id="inicio">
+        Simulador Didático <br>
+        Algoritmo Guloso
+        <button id="botao-iniciar">Iniciar</button>
+    </div>
 
-    
-    <div id="interacao">
-        <div class="fila">
-            <div class="caixa">C1</div>
-            <div class="pessoa">1</div>
-            <div class="pessoa">2</div>
-            <div class="pessoa">3</div>
-            <div class="pessoa">4</div>
-            <button class="botao-escolha">ESCOLHER</button>
-        </div>
-        <div class="fila">
-            <div class="caixa">C2</div>
-            <div class="pessoa">1</div>
-            <div class="pessoa">2</div>
-            <div class="pessoa">3</div>
-            <div class="pessoa">4</div>
-            <button class="botao-escolha">ESCOLHER</button>
-        </div>
-        <div class="fila">
-            <div class="caixa">C3</div>
-            <div class="pessoa">1</div>
-            <div class="pessoa">2</div>
-            <div class="pessoa">3</div>
-            <div class="pessoa">4</div>
-            <button class="botao-escolha">ESCOLHER</button>
-        </div>
-        <div class="fila">
-            <div class="caixa">C4</div>
-            <div class="pessoa">1</div>
-            <div class="pessoa">2</div>
-            <div class="pessoa">3</div>
-            <div class="pessoa">4</div>
-            <button class="botao-escolha">ESCOLHER</button>
-        </div>
-    </div>
-        
-    <div id="menu">
-        <button id="botao-proximo">Próximo</button>
-    </div>
-        
-    <script src="main.js"></script>
+
+    <script>
+        const botaoIniciar = document.getElementById("botao-iniciar");
+
+        botaoIniciar.addEventListener("click", function (){
+            window.location.href = "sim.html"
+        })
+    </script>
 </body>
 </html>
