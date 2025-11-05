@@ -1,11 +1,17 @@
+const botaoIniciar = document.getElementById("botao-iniciar");
 const botaoProx = document.getElementById("botao-proximo");
+const botaoReiniciar = document.getElementById("botao-reiniciar");
 const botoesEscolher = document.querySelectorAll('.botao-escolha');
 const filas = document.getElementsByClassName("fila");
+const telaInicio = document.getElementById("tela-inicio")
+const telaInteracao = document.getElementById("interacao")
+const telaMenu = document.getElementById("menu")
+const telaFim = document.getElementById("tela-fim")
 
-var frame = -1;
 const QTDE_FILAS = 4
 const FRAME_MAX = 10
 const TEMPO_MANUTENCAO = 3
+var frame = -1;
 
 // Array de booleano para indicar se o próximo tempo de retirada de uma fila deve ser calculado ou não (com base no cliente da frente)
 var atualizaTempo = [1,1,1,1]
@@ -39,6 +45,15 @@ var caixaEstado =   [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 1
 // situação atual dos caixas (1 = ok, 0 = quebrado)
 var caixaAtual = [1,1,1,1]
 
+function fimDeJogo(){
+    telaFim.classList.remove("invisible")
+    telaFim.querySelector("p span").textContent = frame+1
+}
+
+function reiniciar(){
+    localStorage.setItem("pularInicio", "true");
+    window.location.reload();
+}
 
 function removerPessoa(filaId) {
     // Se ainda não chegou a hora de remover, ignora
@@ -57,6 +72,10 @@ function removerPessoa(filaId) {
             primeira.remove();
         }, 400);
 
+        // Detecta fim de jogo
+        if(primeira.className.includes('player'))   
+            fimDeJogo()
+        
         // sinaliza que o tempo da próxima pessoa sair precisa ser atualizado
         atualizaTempo[filaId] = 1
     }
@@ -110,7 +129,6 @@ function consertarCaixa(filaId){
 
     atualizaTempo[filaId] = 1
     caixaAtual[filaId] = 1;
-
 }
 
 function posicionarPlayer(thisButton){
@@ -167,6 +185,9 @@ function atualizarTemposSaida(){
 
 // Função principal da simulação
 function proximoFrame(){
+    // Impede que o botão seja apertado antes que as animações acabem, evitando bugs
+    botaoProx.style.pointerEvents = "none"
+    
     frame++;
     if(frame == FRAME_MAX) return
 
@@ -175,28 +196,60 @@ function proximoFrame(){
         removerPessoa(index)
         operaCaixa(index)
     }
-
+    
     // Espera o tempo da animação antes de atualizar tempos
     setTimeout(() => {
         atualizarTemposSaida()
+        botaoProx.style.pointerEvents = "all"
     }, 400)
 
+    imprimeTempo()
+}
+
+function imprimeTempo(){
+    document.querySelector("#clock span").textContent = frame+1;
 }
 
 function init(){
+    telaInicio.classList.add("invisible")
+    telaInteracao.classList.remove("invisible")
+    telaMenu.classList.remove("invisible")
+
+
     for (let index = 0; index < QTDE_FILAS; index++) {
         configInicial[index].forEach(tipo => __inserirPessoa(tipo, index))
     }
     atualizarTemposSaida()
-    // frame++;
+
+    imprimeTempo()
 }
 
 // Associa as funçãos para cada botão
+botaoIniciar.addEventListener("click", init)
+
 botaoProx.addEventListener("click", proximoFrame)
+
+botaoReiniciar.addEventListener("click", reiniciar)
 
 botoesEscolher.forEach(botao => {
     botao.addEventListener('click', () => {posicionarPlayer(botao)} );
 });
 
+// Para reiniciar o jogo sem precisar passar pela tela inicial
+window.addEventListener("load", () => {
+    if (localStorage.getItem("pularInicio") === "true") {
+        localStorage.removeItem("pularInicio");
+        telaInicio.classList.add("invisible");
+        telaInteracao.classList.remove("invisible");
+        telaMenu.classList.remove("invisible");
+        init(); 
+    }
+});
 
-init()
+// Falta:
+// [ ] estilizar a tela de inicio
+// [X] plotar a contagem de frame (tempo)
+// [X] detectar fim de jogo
+// [X] adicionar tela de fim de jogo
+// [X] estilizar tela de fim de jogo
+// [ ] criar uma sequência maior para aplicar o algoritmo (e que funcione :p)

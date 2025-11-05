@@ -3,23 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Referência ao CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    <div id="inicio">
-        Simulador Didático <br>
-        Algoritmo Guloso
-        <button id="botao-iniciar">Iniciar</button>
+    <div id="tela-inicio">
+        texto exemplooo
+        <button id="botao-iniciar"> aperte aqui!!!!</button>
     </div>
 
+    
+    <div id="interacao" class="invisible">
+        <div class="fila">
+            <div class="caixa"></div>
+            <button class="botao-escolha">ESCOLHER</button>
+        </div>
+        <div class="fila">
+            <div class="caixa"></div>
+            <button class="botao-escolha">ESCOLHER</button>
+        </div>
+        <div class="fila">
+            <div class="caixa"></div>
+            <button class="botao-escolha">ESCOLHER</button>
+        </div>
+        <div class="fila">
+            <div class="caixa"></div>
+            <button class="botao-escolha">ESCOLHER</button>
+        </div>
+    </div>
+        
+    <div id="menu" class="invisible">
+        <button id="botao-proximo">Próximo</button>
+        <div id="clock">
+            <img src="img/clock.png">
+            <span></span>
+        </div>
+    </div>
+        
 
-    <script>
-        const botaoIniciar = document.getElementById("botao-iniciar");
+    <div id="tela-fim" class="invisible">
+        <h2>Parabéns, você conseguiu ser atendido!</h2>
+        <p>Quantidade de tempo: <span id="tempo"></span> </p>
+        <button id="botao-reiniciar">Reiniciar</button>
+    </div>
 
-        botaoIniciar.addEventListener("click", function (){
-            window.location.href = "sim.html"
-        })
-    </script>
+    <!-- Referência ao script -->
+    <script src="scripts/main.js"></script>
 </body>
 </html>

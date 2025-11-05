@@ -1,13 +1,20 @@
+html, body {
+  height: 100%;        /* faz ocupar toda a altura da janela */
+  margin: 0;           /* remove margens padrão do navegador */
+  padding: 0;          /* remove espaçamento interno */
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 #interacao{
     display: flex;
     width: 100%;
-    height: 90vh;
+    height: 85vh;
     justify-content: space-evenly;
     margin-bottom: 0px;
     background: white;
@@ -25,7 +32,7 @@ body {
 
 .pessoa {
     width: 60%;
-    height: 14%;
+    height: 16%;
     background-color: #4a90e2;
     color: white;
     font-weight: bold;
@@ -35,9 +42,9 @@ body {
     font-size: 20px;
     transition: transform 0.4s ease, opacity 0.4s ease;
     background-color: white;
-    background-size: contain;     /* ajusta a imagem para cobrir toda a div */
-    background-position: center; /* centraliza */
-    background-repeat: no-repeat; /* evita repetição */
+    background-size: contain;     /* ajusta a imagem ficar contida na div */
+    background-position: center; 
+    background-repeat: no-repeat; 
 }
 
 .pessoa.pouco{
@@ -72,6 +79,60 @@ body {
     background-image: url(../img/caixa.jpg);
 }
 
+#menu {
+    bottom: 0;
+    width: 100%;
+    height: 13vh;
+    position: fixed;
+    display: flex;              /* ativa o modo flexbox */
+    align-items: center;        /* alinha verticalmente no centro */
+    justify-content: center;    /* opcional — centraliza horizontalmente */
+    gap: 10px; 
+}
+
+#clock {
+    width: 80px;
+    justify-content:     center;        /* alinha verticalmente no centro */
+    position: absolute;
+    right: 20%;              /* afasta do canto direito */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 5px 5px 6px #9dacbb;
+
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #a5caee;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#clock img{
+    width: 40px;
+    height: 40px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 4px 4px 6px #8fa5ba;
+}
+
+#botao-reiniciar{
+    box-shadow: 4px 4px 6px #323941;
+    margin-top: 80px;
+}
+
+#botao-proximo:hover,#botao-reiniciar:hover {
+    background-color: #357ABD;
+}
+
 .botao-escolha {
     display: none;
     align-items: center;
@@ -84,29 +145,66 @@ body {
     color: rgb(0, 0, 0);
     border-radius: 10px;
     font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    border: none;
+    box-shadow: 3px 3px 5px rgb(168, 141, 97);
 }
 
 .fila:hover .botao-escolha{
     display: flex;
 }
 
+#tela-fim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* fundo semitransparente */
+  background-color: rgba(0, 0, 0, 0.7);
+  
+  /* centraliza o conteúdo dentro da tela */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 10%;
 
-#menu {
-    bottom: 0;
-    margin-top: 0px;
-    position: relative;
+  color: white;
+  font-size: 24px;
+  transition: opacity 0.3s ease;
 }
 
-#botao-proximo {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4a90e2;
-    color: white;
-    /* border: none; */
-    border-radius: 6px;
-    cursor: pointer;
+#tela-fim p{
+    font-size: 25px;
 }
 
-#botao-proximo:hover {
-    background-color: #357ABD;
+#tela-fim p #tempo{
+    color: yellow;
+}
+
+.visivel {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.invisible{
+    opacity: 0;
+    pointer-events: none;
+}
+
+#botaoReiniciar {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#botaoReiniciar:hover {
+  background-color: #357ABD;
 }
