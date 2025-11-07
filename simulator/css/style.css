@@ -82,10 +82,10 @@ body {
 #menu {
     bottom: 0;
     width: 100%;
-    height: 13vh;
+    height: 15vh;
     position: fixed;
     display: flex;              /* ativa o modo flexbox */
-    align-items: center;        /* alinha verticalmente no centro */
+    align-items: flex-start;        /* alinha verticalmente no centro */
     justify-content: center;    /* opcional — centraliza horizontalmente */
     gap: 10px; 
 }
@@ -125,11 +125,19 @@ button {
 }
 
 #botao-reiniciar{
+    margin-top: 30px;
     box-shadow: 4px 4px 6px #323941;
-    margin-top: 80px;
 }
 
-#botao-proximo:hover,#botao-reiniciar:hover {
+#botao-iniciar{
+    margin-top: 40px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
     background-color: #357ABD;
 }
 
@@ -150,43 +158,44 @@ button {
     box-shadow: 3px 3px 5px rgb(168, 141, 97);
 }
 
+.botao-escolha:hover{
+    background-color: rgb(231, 163, 53);
+}
+
 .fila:hover .botao-escolha{
     display: flex;
 }
 
-#tela-fim {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  
-  /* fundo semitransparente */
-  background-color: rgba(0, 0, 0, 0.7);
-  
-  /* centraliza o conteúdo dentro da tela */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 10%;
+#tela-fim, #tela-inicio{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-  color: white;
-  font-size: 24px;
-  transition: opacity 0.3s ease;
+    /* fundo semitranspa-xrente */
+    background-color: rgba(0, 0, 0, 0.7);
+
+    /* centraliza o conteúdo dentro da tela */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 10%;
+
+    color: white;
+    font-size: 24px;
+    transition: opacity 0.3s ease;
 }
 
 #tela-fim p{
     font-size: 25px;
+    line-height: 40px;
 }
 
-#tela-fim p #tempo{
-    color: yellow;
-}
-
-.visivel {
-    opacity: 1;
-    pointer-events: all;
+#tela-inicio{
+    color: black;
+    background-color: white;
 }
 
 .invisible{
@@ -194,17 +203,3 @@ button {
     pointer-events: none;
 }
 
-#botaoReiniciar {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#botaoReiniciar:hover {
-  background-color: #357ABD;
-}

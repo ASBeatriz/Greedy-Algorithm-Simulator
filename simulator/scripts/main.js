@@ -11,6 +11,7 @@ const telaFim = document.getElementById("tela-fim")
 const QTDE_FILAS = 4
 const FRAME_MAX = 10
 const TEMPO_MANUTENCAO = 3
+const TEMPO_MIN = 5     // tempo mínimo pra terminar o jogo
 var frame = -1;
 
 // Array de booleano para indicar se o próximo tempo de retirada de uma fila deve ser calculado ou não (com base no cliente da frente)
@@ -48,6 +49,7 @@ var caixaAtual = [1,1,1,1]
 function fimDeJogo(){
     telaFim.classList.remove("invisible")
     telaFim.querySelector("p span").textContent = frame+1
+    telaFim.querySelector("#tempo-min").textContent = TEMPO_MIN
 }
 
 function reiniciar(){
