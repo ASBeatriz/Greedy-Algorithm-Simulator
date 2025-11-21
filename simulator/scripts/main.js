@@ -1,4 +1,5 @@
-const botaoIniciar = document.getElementById("botao-iniciar");
+const botaoIniciar0 = document.getElementById("botao-iniciar0");
+const botaoIniciar1 = document.getElementById("botao-iniciar1");
 const botaoProx = document.getElementById("botao-proximo");
 const botaoReiniciar = document.getElementById("botao-reiniciar");
 const botoesEscolher = document.querySelectorAll('.botao-escolha');
@@ -8,40 +9,64 @@ const telaInteracao = document.getElementById("interacao")
 const telaMenu = document.getElementById("menu")
 const telaFim = document.getElementById("tela-fim")
 
+var TIPO = 0      // tipo de cenário (0 = funciona, 1 = não funciona)
 const QTDE_FILAS = 4
 const FRAME_MAX = 10
 const TEMPO_MANUTENCAO = 3
-const TEMPO_MIN = 5     // tempo mínimo pra terminar o jogo
+const TEMPO_MIN = [6, 4]     // tempo mínimo pra terminar o jogo
 var frame = -1;
 
 // Array de booleano para indicar se o próximo tempo de retirada de uma fila deve ser calculado ou não (com base no cliente da frente)
 var atualizaTempo = [1,1,1,1]
 
+
+/* 
+    Duas configurações para cada variável: dois cenários diferentes.
+    Posição 0 -> monta o cenário que o alogitmo funciona.
+    Posição 1 -> monta o cenário que o alogitmo NÃO funciona.
+*/
+
 // configuração de clientes inicial
-const configInicial = [[3],
-                       [1,2],
-                       [1,1,1],
-                       [2]]
+const configInicial = [[[3, 3, 2],
+                       [1, 2, 2, 3],
+                       [1, 1],
+                       [2, 3]],
+                    
+                        [[3],
+                        [1,2],
+                        [1,1,1],
+                        [2]]]
 
                        
 //                 tempo ------------------------------>
 // conteúdo binário
-var filaAndar =  [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 1
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 2
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 3
-                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]   // fila 4
+var filaAndar =  [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // f1
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f2
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f3
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]    // f4
 
 // conteúdo = tipo do cliente adicionado
-const filaAumentar = [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 1
-                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 2
-                      [2, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 3
-                      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]   // fila 4
+const filaAumentar = [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // f1
+                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f2
+                      [0, 0, 0, 2, 0, 0, 0, 0, 0, 0],    // f3
+                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],   // f4
+                    
+                    [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // f1
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f2
+                    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f3
+                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]   // f4
 
 // conteúdo = -1 para quebrar, 0 para manter (e 1 para arrumar, mas é colocado dinamicamente)
-var caixaEstado =   [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 1
-                     [0, 0, 0, -1, 0, 0, 0, 0, 0, 0],   // fila 2
-                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // fila 3
-                     [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]   // fila 4
+var caixaEstado =   [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],   // f1
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],    // f2
+                     [0, -1, 0, 0, 0, 0, 0, 0, 0, 0],   // f3
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],    // f4
+                    
+                    [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],     // f1
+                     [0, 0, 0, -1, 0, 0, 0, 0, 0, 0],    // f2
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],     // f3
+                     [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]   // f4
+
 
 // situação atual dos caixas (1 = ok, 0 = quebrado)
 var caixaAtual = [1,1,1,1]
@@ -49,11 +74,11 @@ var caixaAtual = [1,1,1,1]
 function fimDeJogo(){
     telaFim.classList.remove("invisible")
     telaFim.querySelector("p span").textContent = frame+1
-    telaFim.querySelector("#tempo-min").textContent = TEMPO_MIN
+    telaFim.querySelector("#tempo-min").textContent = TEMPO_MIN[TIPO]
 }
 
 function reiniciar(){
-    localStorage.setItem("pularInicio", "true");
+    // localStorage.setItem("pularInicio", "true");
     window.location.reload();
 }
 
@@ -106,7 +131,7 @@ function __inserirPessoa(tipoNum, filaId){
 }
 
 function addPessoa(filaId){
-    const tipoNum = filaAumentar[filaId][frame]
+    const tipoNum = filaAumentar[TIPO][filaId][frame]
     if(tipoNum == 0) return
 
     // Adiciona uma pessoa na fila
@@ -117,7 +142,7 @@ function quebrarCaixa(filaId){
     const caixa = filas[filaId].querySelector('.caixa')
     caixa.style.backgroundImage = "url(img/caixaQuebrado.jpg)"
     if (frame+2 >= FRAME_MAX) return;
-    caixaEstado[filaId][frame + TEMPO_MANUTENCAO] = 1;
+    caixaEstado[TIPO][filaId][frame + TEMPO_MANUTENCAO] = 1;
 
     // zera a expectativa do caixa andar
     filaAndar[filaId] = Array(FRAME_MAX).fill(0)
@@ -148,10 +173,10 @@ function posicionarPlayer(thisButton){
     atualizarTemposSaida()
 }
 
-// Função para decidir o estado de um caixa em cada frame, de acordo com os índices em caixaEstado
+// Função para decidir o estado de um caixa em cada frame, de acordo com os índices em caixaEstado[TIPO]
 function operaCaixa(filaId){
-    if(caixaEstado[filaId][frame] == 0) return;
-    else if (caixaEstado[filaId][frame] == -1)
+    if(caixaEstado[TIPO][filaId][frame] == 0) return;
+    else if (caixaEstado[TIPO][filaId][frame] == -1)
         quebrarCaixa(filaId)
     else
         consertarCaixa(filaId)
@@ -212,14 +237,15 @@ function imprimeTempo(){
     document.querySelector("#clock span").textContent = frame+1;
 }
 
-function init(){
+function init(type){
+    TIPO = type
     telaInicio.classList.add("invisible")
     telaInteracao.classList.remove("invisible")
     telaMenu.classList.remove("invisible")
 
 
     for (let index = 0; index < QTDE_FILAS; index++) {
-        configInicial[index].forEach(tipo => __inserirPessoa(tipo, index))
+        configInicial[TIPO][index].forEach(tipo => __inserirPessoa(tipo, index))
     }
     atualizarTemposSaida()
 
@@ -227,7 +253,8 @@ function init(){
 }
 
 // Associa as funçãos para cada botão
-botaoIniciar.addEventListener("click", init)
+botaoIniciar0.addEventListener("click", () => {init(0)})
+botaoIniciar1.addEventListener("click", () => {init(1)})
 
 botaoProx.addEventListener("click", proximoFrame)
 
@@ -249,9 +276,10 @@ window.addEventListener("load", () => {
 });
 
 // Falta:
-// [ ] estilizar a tela de inicio
+// [X] estilizar a tela de inicio
 // [X] plotar a contagem de frame (tempo)
 // [X] detectar fim de jogo
 // [X] adicionar tela de fim de jogo
 // [X] estilizar tela de fim de jogo
-// [ ] criar uma sequência maior para aplicar o algoritmo (e que funcione :p)
+// [-] criar uma sequência maior para aplicar o algoritmo (e que funcione :p)
+// [X] criar duas sequências: uma que funcione e outra que não  
